@@ -1,0 +1,84 @@
+<div>
+  <!-- Employee details form -->
+  <form>
+    <label>Name</label>
+    <input type="text">
+
+    <label>Designation</label>
+    <input type="text">
+
+    <label>Department</label>
+    <input type="text">
+
+    <label>Manager name</label>
+    <input type="text">
+
+    <label>Employee ID</label>
+    <input type="number">
+
+    <label>Manager ID</label>
+    <input type="number">
+
+    <label>Joining Date</label>
+    <input type="date">
+  </form>
+
+  <!-- Employee attendance register form -->
+  <form>
+    <label>Date</label>
+    <input type="date">
+
+    <label>Present</label>
+    <input type="checkbox">
+    <label>Absent</label>
+    <input type="checkbox">
+
+    <!-- Needs to be a dropdown box with four options -->
+    <label>Leave Type</label>
+    <input type="">
+
+    <label>Employee ID</label>
+    <input type="number">
+  </form>
+
+  <!-- Generate a report section -->
+  <form>
+    <label>Manager ID</label>
+    <input type="number">
+
+    <button type="submit">Generate Report</button>
+  </form>
+
+  <!-- Entered employee attendance data -->
+  <table>
+    <thead>
+      <th>Employee ID</th>
+      <th>Name</th>
+      <th>Absent Date</th>
+      <th>Leave Type</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1123</td>
+        <td>bob</td>
+        <td>N/A</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td>1123</td>
+        <td>bob</td>
+        <td>N/A</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td>1123</td>
+        <td>bob</td>
+        <td>N/A</td>
+        <td>N/A</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Sends mail containing employee attendance data to chosen manager -->
+  <button type="submit">Send Email</button>
+</div>
