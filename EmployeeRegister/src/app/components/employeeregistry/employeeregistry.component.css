@@ -2,6 +2,10 @@ th, td, table {
   border: 1px solid grey;
 }
 
+label {
+  font-weight: 700;
+}
+
 /* Add style changes when the screen reaches a certain size */
 
 /* Fix cluttering of data */

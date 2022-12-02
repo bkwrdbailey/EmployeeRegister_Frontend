@@ -6,39 +6,44 @@
     <form style="border: 2px solid black; padding: 5px; display: flex;">
       <div style="margin-right: 5px;">
         <label style="display: block;">Name</label>
-        <input style="margin-bottom: 5px;" type="text" required>
+        <input id="newEmployeeName" name="empName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.name">
 
         <label style="display: block;">Employee ID</label>
-        <input style="margin-bottom: 5px;" type="number" min="1" required>
+        <input id="newEmployeeId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.empId">
 
         <label style="display: block;">Joining Date</label>
-        <input style="margin-bottom: 5px;" type="date" required>
+        <input id="newEmployeeJoiningDate" name="startDate" style="margin-bottom: 5px;" type="date" required [(ngModel)]="newEmployee.startingDate">
+
+        <!-- Used for New Employee form errors -->
+        <div id="newEmployeeErrors" style="color: red;"></div>
       </div>
 
       <div style="margin-right: 5px;">
         <label style="display: block;">Department</label>
-        <input style="margin-bottom: 5px;" type="text" required>
+        <input id="newEmployeeDepartment" name="department" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.department">
 
         <label style="display: block;">Designation</label>
-        <input style="margin-bottom: 5px;" type="text" required>
+        <input id="newEmployeeDesignation" name="designation" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.designation">
       </div>
 
       <div>
         <label style="display: block;">Manager name</label>
-        <input style="margin-bottom: 5px;" type="text" required>
+        <input id="newEmployeeManagerName" name="mngName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.managerName">
 
         <label style="display: block;">Manager ID</label>
-        <input style="margin-bottom: 5px;" type="number" min="1" required>
+        <input id="newEmployeeManagerId" name="mngId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.managerId">
+
+        <button style="display: block; margin-top: 15px; margin-left: 119px;" type="submit" (click)="attemptToAddNewEmployee()">Submit</button>
       </div>
     </form>
 
     <!-- Employee attendance register form -->
     <form style="border: 2px solid black; padding: 5px; display: inline-block; margin-left: 5px;">
       <label style="display: block;">Employee ID</label>
-      <input name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="employeeAttendance.empId">
+      <input id="employeeAttendanceId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="employeeAttendance.empId">
 
       <label for="currentDate" style="display: block;">Date</label>
-      <input name="currDate" id="currentDate" style="margin-bottom: 5px;" type="date" required [(ngModel)]="employeeAttendance.date">
+      <input id="employeeAttendanceDate" name="currDate" id="currentDate" style="margin-bottom: 5px;" type="date" min="{{currYear}}-01-01" max="{{currYear}}-12-31" required [(ngModel)]="inputtedDate">
 
       <div style="display: block; margin-bottom: 5px;">
         <label for="present" style="display: inline-block;">Present</label>
@@ -57,22 +62,23 @@
       </select>
 
       <!-- Used for Employee Attendance form errors -->
-      <p class="meme" id="employeeAttendanceErrors"></p>
+      <div id="employeeAttendanceErrors" style="color: red; margin-top: 5px;"></div>
     </form>
   </div>
 
   <!-- Generate a report section -->
   <div style="display: flex; justify-content: center; margin-top: 10px;">
-    <form style="border: 2px black solid; padding: 5px;">
+    <form style="border: 2px black solid; padding: 8px;">
       <label>Manager ID</label>
-      <input style="margin-right: 5px; margin-left: 5px;" type="number" min="1" required>
+      <input id="managerId" name="checkMngId" style="margin-right: 5px; margin-left: 5px;" type="number" min="1" required [(ngModel)]="checkManagerId">
       <button type="submit" (click)="generateReport()">Generate Report</button>
+      <div id="managerIdError" style="color: red; margin-top: 7px; display: flex; justify-content: center;"></div>
     </form>
   </div>
 
   <!-- Entered employee attendance data -->
   <div style="display: flex; justify-content: center; margin-top: 10px;">
-    <table>
+    <table id="employeeRecordsTable" hidden>
       <thead>
         <th>Employee ID</th>
         <th>Name</th>
@@ -94,6 +100,7 @@
 
   <!-- Sends mail containing employee attendance data to chosen manager -->
   <div style="display: flex; justify-content: center; margin-top: 5px;">
-    <button id="sendEmail" disabled type="submit">Send Email</button>
+    <button id="sendEmail" type="submit" hidden>Send Email</button>
+    <div id="emailError" style="color: red;"></div>
   </div>
 </div>
