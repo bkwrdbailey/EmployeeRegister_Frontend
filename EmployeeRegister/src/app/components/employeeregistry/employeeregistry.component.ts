@@ -42,7 +42,7 @@ export class EmployeeregistryComponent implements OnInit {
           // Notify user that the new employee was not added
           const newEmployeeErrorElement = document.getElementById('newEmployeeErrors') as HTMLElement;
           newEmployeeErrorElement.removeAttribute('hidden');
-          newEmployeeErrorElement.innerHTML = 'Error adding new employee';
+          newEmployeeErrorElement.innerHTML = 'Employee name or id already taken';
         }
       })
     }
@@ -151,6 +151,9 @@ export class EmployeeregistryComponent implements OnInit {
       const empNameElement = document.getElementById('newEmployeeName') as HTMLElement;
       errorElement.innerHTML += 'Must give a valid name</br>';
       empNameElement.style.border = '2px red solid';
+    } else if(!this.newEmployee.name.trim().includes(' ')) {
+      document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
+      errorElement.innerHTML += 'Must separate employee first and last name with a space</br>';
     }
 
     if(this.newEmployee.department == '') {
@@ -172,6 +175,9 @@ export class EmployeeregistryComponent implements OnInit {
       const empManagerNameElement = document.getElementById('newEmployeeManagerName') as HTMLElement;
       errorElement.innerHTML += 'Must give a valid manager name</br>';
       empManagerNameElement.style.border = '2px red solid';
+    } else if(!this.newEmployee.managerName.trim().includes(' ')) {
+      document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
+      errorElement.innerHTML += 'Must separate manager first and last name with a space</br>';
     }
 
     if(this.newEmployee.managerId <= 0) {
@@ -181,6 +187,15 @@ export class EmployeeregistryComponent implements OnInit {
       empManagerIdElement.style.border = '2px red solid';
     }
 
+    if(this.newEmployee.managerName != '' && this.newEmployee.managerId > 0) {
+      this.employeeService.verifyManagerData(this.newEmployee.managerId, this.newEmployee.managerName).subscribe(res => {
+        if(res == false) {
+          document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
+          errorElement.innerHTML += 'Invalid manager name and/or id pairing</br>';
+        }
+      })
+    }
+
     if(this.newEmployee.empId <= 0) {
       document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
       const empIdElement = document.getElementById('newEmployeeId') as HTMLElement;
@@ -188,7 +203,7 @@ export class EmployeeregistryComponent implements OnInit {
       empIdElement.style.border = '2px red solid';
     }
 
-    if(this.newEmployee.startingDate.getFullYear() > new Date().getFullYear() || this.newEmployee.startingDate.getMonth() > new Date().getMonth()) {
+    if(new Date(this.newEmployee.startingDate + 'T00:00:00-07:00').getFullYear() > new Date().getFullYear() || new Date(this.newEmployee.startingDate + 'T00:00:00-07:00').getMonth() > new Date().getMonth()) {
       document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
       const empDateElement = document.getElementById('newEmployeeJoiningDate') as HTMLElement;
       errorElement.innerHTML += 'Invalid Date given</br>';

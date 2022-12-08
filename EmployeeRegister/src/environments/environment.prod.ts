@@ -1,4 +1,8 @@
 export const environment = {
   production: true,
-  apiBaseUrl: ''
+   /* Hosted Backend API URL */
+  //apiBaseUrl: ''
+  
+  /* LocalHost Testing */
+  apiBaseUrl: 'https://localhost:7053/'
 };

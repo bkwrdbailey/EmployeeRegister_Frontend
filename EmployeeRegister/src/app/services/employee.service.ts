@@ -14,20 +14,25 @@ export class EmployeeService {
 
   // Sends HTTP POST request to backend for adding a new employee record to the database
   addNewEmployee(employee: Employee): Observable<boolean> {
-    return this.http.post<boolean>(environment.apiBaseUrl + '/new/employee', employee);
+    return this.http.post<boolean>(environment.apiBaseUrl + 'new/employee', employee);
   }
 
   // Sends HTTP request with data meant to be emailed to a specified manager
   emailEmployeeReport(employeeReport: EmployeeTabularData[]): Observable<boolean> {
-    return this.http.post<boolean>(environment.apiBaseUrl + '/email/manager', employeeReport);
+    return this.http.post<boolean>(environment.apiBaseUrl + 'email/manager', employeeReport);
   }
 
   // Sends HTTP GET request to be able to verify if inputted manager ID matches an ID in the database
   verifyManagerId(managerId: number): Observable<boolean> {
-    return this.http.get<boolean>(environment.apiBaseUrl + `/verify/${managerId}`);
+    return this.http.get<boolean>(environment.apiBaseUrl + `verify/${managerId}`);
+  }
+
+  // Sends HTTP GET request to be able to verify the manager name and ID belong to the same record
+  verifyManagerData(managerId: number, managerName: string): Observable<boolean> {
+    return this.http.get<boolean>(environment.apiBaseUrl + `new/employee/verify/manager/${managerId}/${managerName}`);
   }
 
   checkEmployeeId(employeeId: number): Observable<string> {
-    return this.http.get<string>(environment.apiBaseUrl + `/check/${employeeId}`);
+    return this.http.get<string>(environment.apiBaseUrl + `check/${employeeId}`);
   }
 }

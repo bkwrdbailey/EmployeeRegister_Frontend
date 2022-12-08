@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: ''
+  /* Hosted Backend API URL */
+  //apiBaseUrl: ''
+
+  /* LocalHost URL for testing */
+  apiBaseUrl: 'https://localhost:7053/'
 };
 
 /*
