@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   /* Hosted Backend API URL */
-  //apiBaseUrl: ''
+  //apiBaseUrl: 'https://employeeregisterbackend.azurewebsites.net/'
 
   /* LocalHost URL for testing */
   apiBaseUrl: 'https://localhost:7053/'

@@ -6,6 +6,15 @@ label {
   font-weight: 700;
 }
 
+.newEmployeeForm {
+  display: flex;
+}
+
+@media (max-width: 700px) {
+  .newEmployeeForm {
+    display: block;
+  }
+}
 /* Add style changes when the screen reaches a certain size */
 
 /* Fix cluttering of data */

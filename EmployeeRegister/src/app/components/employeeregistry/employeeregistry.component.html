@@ -1,73 +1,88 @@
 <div>
-  <h1 style="display: flex; justify-content: center;">Employee Attendance Form</h1>
+  <h1 style="display: flex; justify-content: center; margin-bottom: 30px;">Employee Attendance Form</h1>
 
-  <!-- Employee details form -->
+  <h2 style="display: flex; justify-content: center;">New Employee Form</h2>
+
+  <!-- New Employee details form -->
   <div style="display: flex; justify-content: center;">
-    <form style="border: 2px solid black; padding: 5px; display: flex;">
-      <div style="margin-right: 5px;">
-        <label style="display: block;">Name</label>
-        <input id="newEmployeeName" name="empName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.name">
+    <form style="border: 2px solid black; padding: 5px;">
+      <div class="newEmployeeForm">
+        <div style="margin-right: 5px;">
+          <label style="display: block;">Name</label>
+          <input id="newEmployeeName" name="empName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.name">
 
-        <label style="display: block;">Employee ID</label>
-        <input id="newEmployeeId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.empId">
+          <label style="display: block;">Employee ID</label>
+          <input id="newEmployeeId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.empId">
 
-        <label style="display: block;">Joining Date</label>
-        <input id="newEmployeeJoiningDate" name="startDate" style="margin-bottom: 5px;" type="date" required [(ngModel)]="newEmployee.startingDate">
+          <label style="display: block;">Joining Date</label>
+          <input id="newEmployeeJoiningDate" name="startDate" style="margin-bottom: 5px;" type="date" required [(ngModel)]="newEmployee.startingDate">
 
-        <!-- Used for New Employee form errors -->
+        </div>
+
+        <div style="margin-right: 5px;">
+          <label style="display: block;">Department</label>
+          <input id="newEmployeeDepartment" name="department" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.department">
+
+          <label style="display: block;">Designation</label>
+          <input id="newEmployeeDesignation" name="designation" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.designation">
+        </div>
+
+        <div>
+          <label style="display: block;">Manager name</label>
+          <input id="newEmployeeManagerName" name="mngName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.managerName">
+
+          <label style="display: block;">Manager ID</label>
+          <input id="newEmployeeManagerId" name="mngId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.managerId">
+
+          <button style="display: block; margin-top: 15px; margin-left: 119px;" type="submit" (click)="attemptToAddNewEmployee()">Submit</button>
+        </div>
+      </div>
+
+      <!-- Used for New Employee form errors -->
+      <div style="display: block;">
         <div id="newEmployeeErrors" style="color: red;"></div>
       </div>
-
-      <div style="margin-right: 5px;">
-        <label style="display: block;">Department</label>
-        <input id="newEmployeeDepartment" name="department" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.department">
-
-        <label style="display: block;">Designation</label>
-        <input id="newEmployeeDesignation" name="designation" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.designation">
-      </div>
-
-      <div>
-        <label style="display: block;">Manager name</label>
-        <input id="newEmployeeManagerName" name="mngName" style="margin-bottom: 5px;" type="text" required [(ngModel)]="newEmployee.managerName">
-
-        <label style="display: block;">Manager ID</label>
-        <input id="newEmployeeManagerId" name="mngId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="newEmployee.managerId">
-
-        <button style="display: block; margin-top: 15px; margin-left: 119px;" type="submit" (click)="attemptToAddNewEmployee()">Submit</button>
-      </div>
     </form>
+  </div>
 
-    <!-- Employee attendance register form -->
+  <h2 style="display: flex; justify-content: center;">Daily Attendance Form</h2>
+
+  <!-- Employee attendance register form -->
+  <div style="display: flex; justify-content: center; margin-top: 10px;">
     <form style="border: 2px solid black; padding: 5px; display: inline-block; margin-left: 5px;">
-      <label style="display: block;">Employee ID</label>
-      <input id="employeeAttendanceId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="employeeAttendance.empId">
+      <div style="display: block;">
+        <label style="display: block;">Employee ID</label>
+        <input id="employeeAttendanceId" name="empId" style="margin-bottom: 5px;" type="number" min="1" required [(ngModel)]="employeeAttendance.empId">
 
-      <label for="currentDate" style="display: block;">Date</label>
-      <input id="employeeAttendanceDate" name="currDate" id="currentDate" style="margin-bottom: 5px;" type="date" min="{{currYear}}-01-01" max="{{currYear}}-12-31" required [(ngModel)]="inputtedDate">
+        <label for="currentDate" style="display: block;">Date</label>
+        <input id="employeeAttendanceDate" name="currDate" id="currentDate" style="margin-bottom: 5px;" type="date" min="{{currYear}}-01-01" max="{{currYear}}-12-31" required [(ngModel)]="inputtedDate">
 
-      <div style="display: block; margin-bottom: 5px;">
-        <label for="present" style="display: inline-block;">Present</label>
-        <input id="present" name="attendance" type="radio" value="present" (click)="toggleLeaveTypeOptions(false)" [(ngModel)]="employeeAttendance.attendanceCode">
-        <label for="absent" style="display: inline-block; margin-left: 5px;">Absent</label>
-        <input id="absent" name="attendance" type="radio" value="absent" (click)="toggleLeaveTypeOptions(true)" [(ngModel)]="employeeAttendance.attendanceCode">
+        <div style="display: block; margin-bottom: 5px;">
+          <label for="present" style="display: inline-block;">Present</label>
+          <input id="present" name="attendance" type="radio" value="present" (click)="toggleLeaveTypeOptions(false)" [(ngModel)]="employeeAttendance.attendanceCode">
+          <label for="absent" style="display: inline-block; margin-left: 5px;">Absent</label>
+          <input id="absent" name="attendance" type="radio" value="absent" (click)="toggleLeaveTypeOptions(true)" [(ngModel)]="employeeAttendance.attendanceCode">
+        </div>
+
+        <label for="leaveTypes" style="display: block;">Leave Type</label>
+        <select disabled name="leaveTypes" id="leaveTypes" [(ngModel)]="employeeAttendance.leaveType">
+          <option disabled >N/A</option>
+          <option value="sick">Sick</option>
+          <option value="casual">Casual</option>
+          <option value="planned">Planned</option>
+          <option value="unplanned">Unplanned</option>
+        </select>
       </div>
-
-      <label for="leaveTypes" style="display: block;">Leave Type</label>
-      <select disabled name="leaveTypes" id="leaveTypes" [(ngModel)]="employeeAttendance.leaveType">
-        <option disabled >N/A</option>
-        <option value="sick">Sick</option>
-        <option value="casual">Casual</option>
-        <option value="planned">Planned</option>
-        <option value="unplanned">Unplanned</option>
-      </select>
 
       <!-- Used for Employee Attendance form errors -->
-      <div id="employeeAttendanceErrors" style="color: red; margin-top: 5px;"></div>
+      <div style="display: block;">
+        <div id="employeeAttendanceErrors" style="color: red; margin-top: 5px;"></div>
+      </div>
     </form>
   </div>
 
   <!-- Generate a report section -->
-  <div style="display: flex; justify-content: center; margin-top: 10px;">
+  <div style="display: flex; justify-content: center; margin-top: 15px;">
     <form style="border: 2px black solid; padding: 8px;">
       <label>Manager ID</label>
       <input id="managerId" name="checkMngId" style="margin-right: 5px; margin-left: 5px;" type="number" min="1" required [(ngModel)]="checkManagerId">
