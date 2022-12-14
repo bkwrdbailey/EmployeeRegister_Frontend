@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   /* Hosted Backend API URL */
-  //apiBaseUrl: 'https://employeeregisterbackend.azurewebsites.net/'
+  apiBaseUrl: 'https://employeeregisterbackend.azurewebsites.net/'
 
   /* LocalHost URL for testing */
-  apiBaseUrl: 'https://localhost:7053/'
+  // apiBaseUrl: 'https://localhost:7053/'
 };
 
 /*

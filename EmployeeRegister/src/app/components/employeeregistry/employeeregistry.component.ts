@@ -38,7 +38,9 @@ export class EmployeeregistryComponent implements OnInit {
 
     if(this.checkNewEmployeeFieldsAreValid()) {
       this.employeeService.addNewEmployee(this.newEmployee).subscribe(res => {
-        if(!res) {
+        if(res) {
+          document.getElementById('employeePopupNotif')?.removeAttribute('hidden');
+        } else {
           // Notify user that the new employee was not added
           const newEmployeeErrorElement = document.getElementById('newEmployeeErrors') as HTMLElement;
           newEmployeeErrorElement.removeAttribute('hidden');
@@ -259,5 +261,9 @@ export class EmployeeregistryComponent implements OnInit {
 
     const empDateElement = document.getElementById('employeeAttendanceDate') as HTMLElement;
     empDateElement.style.removeProperty('border');
+  }
+
+  hidePopup() {
+    document.getElementById('employeePopupNotif')?.setAttribute('hidden', '');
   }
 }

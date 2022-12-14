@@ -1,6 +1,15 @@
 <div>
   <h1 style="display: flex; justify-content: center; margin-bottom: 30px;">Employee Attendance Form</h1>
 
+  <div style="display: flex; justify-content: end;">
+    <div id="employeePopupNotif" style="border: black 2px solid; padding-left: 5px; padding-right: 5px; padding-top: 3px;" hidden>
+      <h3>Employee Successfully added</h3>
+      <div style="display: flex; justify-content: center; margin-bottom: 5px;">
+        <button style="background-color: yellowgreen; border: 1px yellowgreen solid; padding-left: 30px; padding-right: 30px; padding-top: 5px; padding-bottom: 5px; color: white;" (click)="hidePopup()">OK</button>
+      </div>
+    </div>
+  </div>
+
   <h2 style="display: flex; justify-content: center;">New Employee Form</h2>
 
   <!-- New Employee details form -->
