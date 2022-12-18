@@ -95,13 +95,14 @@
     <form style="border: 2px black solid; padding: 8px;">
       <label>Manager ID</label>
       <input id="managerId" name="checkMngId" style="margin-right: 5px; margin-left: 5px;" type="number" min="1" required [(ngModel)]="checkManagerId">
-      <button type="submit" (click)="generateReport()">Generate Report</button>
+      <button type="submit" (click)="generateReport()">{{reportText}}</button>
       <div id="managerIdError" style="color: red; margin-top: 7px; display: flex; justify-content: center;"></div>
     </form>
   </div>
 
   <!-- Entered employee attendance data -->
   <div style="display: flex; justify-content: center; margin-top: 10px;">
+    <h3>ManagerId: {{checkManagerId}}</h3>
     <table id="employeeRecordsTable" hidden>
       <thead>
         <th>Employee ID</th>
@@ -124,7 +125,8 @@
 
   <!-- Sends mail containing employee attendance data to chosen manager -->
   <div style="display: flex; justify-content: center; margin-top: 5px;">
-    <button id="sendEmail" type="submit" hidden>Send Email</button>
-    <div id="emailError" style="color: red;"></div>
+    <button id="sendEmail" type="submit" (click)="sendEmail()" hidden>Send Email</button>
+    <div id="emailError" style="color: red;">Error sending email. Try again later</div>
+    <div id="emailSucceeded">Successfully sent email with report</div>
   </div>
 </div>

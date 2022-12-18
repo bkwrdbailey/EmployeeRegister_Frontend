@@ -16,6 +16,7 @@ export class EmployeeregistryComponent implements OnInit {
   inputtedDate!: string;
   checkManagerId: number = 0;
   currYear!: string;
+  reportText: string = 'Generate Report';
 
   employeeAttendance: EmployeeAttendance = {empId: 0, date: new Date(), attendanceCode: '', leaveType: 'N/A'}
   newEmployee: Employee = {empId: 0, name: '', department: '', designation: '', managerName: '', managerId: 0, startingDate: new Date()}
@@ -63,12 +64,17 @@ export class EmployeeregistryComponent implements OnInit {
         if(employeeData != '') {
           this.employeeService.verifyManagerId(this.checkManagerId).subscribe(res => {
             if(res) {
+              
               // Formate date data to look more presentable in the table
               let formattedDate = this.employeeAttendance.date.getMonth().toString() + '/' + this.employeeAttendance.date.getDate().toString() + '/' + this.employeeAttendance.date.getFullYear().toString();
               // Add employeeAttendance object to listOfEmployeesAttendance array
-              let newTableRecord = new EmployeeTabularData(employeeData, this.employeeAttendance.empId, formattedDate, this.employeeAttendance.attendanceCode, this.employeeAttendance.leaveType);
+              let newTableRecord = new EmployeeTabularData(employeeData, this.employeeAttendance.empId, formattedDate, this.employeeAttendance.attendanceCode, this.employeeAttendance.leaveType, this.checkManagerId);
 
+              document.getElementById('emailSucceeded')?.setAttribute('hidden', '');
+              document.getElementById('sendEmail')?.removeAttribute('disabled');
               this.listOfEmployeesAttendance.push(newTableRecord);
+              this.reportText = 'Update Report';
+
             } else {
               const managerIdError = document.getElementById('managerIdError') as HTMLElement;
               const managerIdInputElement = document.getElementById('managerId') as HTMLElement;
@@ -263,7 +269,23 @@ export class EmployeeregistryComponent implements OnInit {
     empDateElement.style.removeProperty('border');
   }
 
+  // Will hide the new employee popup when the user clicks 'OK' button
   hidePopup() {
     document.getElementById('employeePopupNotif')?.setAttribute('hidden', '');
+  }
+
+  // Sends the generated employee attendance report to the chosen manager
+  sendEmail() {
+    document.getElementById('emailError')?.setAttribute('hidden', '');
+    document.getElementById('sendEmail')?.setAttribute('disabled', '');
+
+    this.employeeService.emailEmployeeReport(this.listOfEmployeesAttendance).subscribe(res => {
+      if (res) {
+        document.getElementById('emailSucceeded')?.removeAttribute('hidden');
+      } else {
+        document.getElementById('emailError')?.removeAttribute('hidden');
+        document.getElementById('sendEmail')?.removeAttribute('disabled');
+      }
+    })
   }
 }

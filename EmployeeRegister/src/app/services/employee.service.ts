@@ -32,6 +32,7 @@ export class EmployeeService {
     return this.http.get<boolean>(environment.apiBaseUrl + `new/employee/verify/manager/${managerId}/${managerName}`);
   }
 
+  // Sends HTTP GET request to check if the employee id exists and acquire that employee's name
   checkEmployeeId(employeeId: number): Observable<string> {
     return this.http.get<string>(environment.apiBaseUrl + `check/${employeeId}`);
   }
