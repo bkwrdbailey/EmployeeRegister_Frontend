@@ -30,8 +30,6 @@ export class EmployeeregistryComponent implements OnInit {
 
   // Attempt to add a new employee record to the database
   attemptToAddNewEmployee() {
-    console.log(this.newEmployee);
-
     document.getElementById('newEmployeeErrors')?.setAttribute('hidden', '');
 
     // Removes red border styling on new employee form inputs
@@ -58,20 +56,28 @@ export class EmployeeregistryComponent implements OnInit {
     // Removes red border styling on employee attendance form inputs
     this.clearEmployeeAttendanceErrorStyling();
 
+    // Clears any error messages and styling for manager id input on generate report section
+    const managerIdError = document.getElementById('managerIdError') as HTMLElement;
+    const managerIdInputElement = document.getElementById('managerId') as HTMLElement;
+    managerIdError.setAttribute('hidden', '');
+    managerIdError.innerHTML = '';
+    managerIdInputElement.style.removeProperty('border');
+
     // Checking if employee attendance input fields hold valid data
     if(this.checkAttendanceFieldsAreValid()) {
       this.employeeService.checkEmployeeId(this.employeeAttendance.empId).subscribe(employeeData => {
-        if(employeeData != '') {
+        if(employeeData.name != 'DNE') {
           this.employeeService.verifyManagerId(this.checkManagerId).subscribe(res => {
             if(res) {
-              
               // Formate date data to look more presentable in the table
-              let formattedDate = this.employeeAttendance.date.getMonth().toString() + '/' + this.employeeAttendance.date.getDate().toString() + '/' + this.employeeAttendance.date.getFullYear().toString();
+              let formattedDate = (this.employeeAttendance.date.getMonth() + 1).toString() + '/' + this.employeeAttendance.date.getDate().toString() + '/' + this.employeeAttendance.date.getFullYear().toString();
               // Add employeeAttendance object to listOfEmployeesAttendance array
-              let newTableRecord = new EmployeeTabularData(employeeData, this.employeeAttendance.empId, formattedDate, this.employeeAttendance.attendanceCode, this.employeeAttendance.leaveType, this.checkManagerId);
+              let newTableRecord = new EmployeeTabularData(employeeData.name, this.employeeAttendance.empId, formattedDate, this.employeeAttendance.attendanceCode, this.employeeAttendance.leaveType, this.checkManagerId);
 
+              document.getElementById('managerId')?.setAttribute('disabled', '');
               document.getElementById('emailSucceeded')?.setAttribute('hidden', '');
               document.getElementById('sendEmail')?.removeAttribute('disabled');
+              document.getElementById('employeeDataTable')?.removeAttribute('hidden');
               this.listOfEmployeesAttendance.push(newTableRecord);
               this.reportText = 'Update Report';
 
@@ -83,6 +89,10 @@ export class EmployeeregistryComponent implements OnInit {
               managerIdInputElement.style.border = '2px red solid';
             }
           })
+        } else {
+          const errorElement = document.getElementById('employeeAttendanceErrors') as HTMLElement;
+          errorElement.innerHTML = 'Employee ID does not match any employee';
+          errorElement.removeAttribute('hidden');
         }
       })
     }
@@ -92,8 +102,6 @@ export class EmployeeregistryComponent implements OnInit {
       document.getElementById('employeeRecordsTable')?.removeAttribute('hidden');
       document.getElementById('sendEmail')?.removeAttribute('hidden');
     }
-
-    console.log(this.employeeAttendance);
   }
 
   // Attempt to send employee attendance list to the backend for emailing to a manager or multiple managers
@@ -122,13 +130,12 @@ export class EmployeeregistryComponent implements OnInit {
       empNameElement.style.border = '2px red solid';
     }
 
-    this.employeeAttendance.date = new Date(this.inputtedDate);
+    this.employeeAttendance.date = new Date(this.inputtedDate + 'T00:00:00-07:00');
+    console.log(this.employeeAttendance);
 
     if(this.employeeAttendance.date.toString() == 'Invalid Date') {
       document.getElementById('employeeAttendanceErrors')?.removeAttribute('hidden');
-      const empDateElement = document.getElementById('employeeAttendanceDate') as HTMLElement;
       errorElement.innerHTML += 'Must enter a valid date</br>';
-      empDateElement.style.border = '2px red solid';
     }
 
     if(this.employeeAttendance.attendanceCode == '') {
@@ -213,9 +220,7 @@ export class EmployeeregistryComponent implements OnInit {
 
     if(new Date(this.newEmployee.startingDate + 'T00:00:00-07:00').getFullYear() > new Date().getFullYear() || new Date(this.newEmployee.startingDate + 'T00:00:00-07:00').getMonth() > new Date().getMonth()) {
       document.getElementById('newEmployeeErrors')?.removeAttribute('hidden');
-      const empDateElement = document.getElementById('newEmployeeJoiningDate') as HTMLElement;
       errorElement.innerHTML += 'Invalid Date given</br>';
-      empDateElement.style.border = '2px red solid';
     }
 
     if(errorElement.innerHTML == '') {
@@ -255,23 +260,25 @@ export class EmployeeregistryComponent implements OnInit {
 
     const empIdElement = document.getElementById('newEmployeeId') as HTMLElement;
     empIdElement.style.removeProperty('border');
-
-    const empDateElement = document.getElementById('newEmployeeJoiningDate') as HTMLElement;
-    empDateElement.style.removeProperty('border');
   }
 
   // Clears any error styling for employee attendance form inputs
   clearEmployeeAttendanceErrorStyling() {
     const empNameElement = document.getElementById('employeeAttendanceId') as HTMLElement;
     empNameElement.style.removeProperty('border');
-
-    const empDateElement = document.getElementById('employeeAttendanceDate') as HTMLElement;
-    empDateElement.style.removeProperty('border');
   }
 
   // Will hide the new employee popup when the user clicks 'OK' button
   hidePopup() {
     document.getElementById('employeePopupNotif')?.setAttribute('hidden', '');
+  }
+
+  startOver() {
+    this.checkManagerId = 0;
+    this.reportText = 'Generate Report';
+    document.getElementById('employeeDataTable')?.setAttribute('hidden', '');
+    document.getElementById('managerId')?.removeAttribute('disabled');
+    this.listOfEmployeesAttendance = [];
   }
 
   // Sends the generated employee attendance report to the chosen manager

@@ -1,14 +1,6 @@
 <div>
   <h1 style="display: flex; justify-content: center; margin-bottom: 30px;">Employee Attendance Form</h1>
 
-  <div style="display: flex; justify-content: end;">
-    <div id="employeePopupNotif" style="border: black 2px solid; padding-left: 5px; padding-right: 5px; padding-top: 3px;" hidden>
-      <h3>Employee Successfully added</h3>
-      <div style="display: flex; justify-content: center; margin-bottom: 5px;">
-        <button style="background-color: yellowgreen; border: 1px yellowgreen solid; padding-left: 30px; padding-right: 30px; padding-top: 5px; padding-bottom: 5px; color: white;" (click)="hidePopup()">OK</button>
-      </div>
-    </div>
-  </div>
 
   <h2 style="display: flex; justify-content: center;">New Employee Form</h2>
 
@@ -52,6 +44,15 @@
         <div id="newEmployeeErrors" style="color: red;"></div>
       </div>
     </form>
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-top: 10px;">
+    <div id="employeePopupNotif" style="border: black 2px solid; padding-left: 5px; padding-right: 5px; padding-top: 3px;" hidden>
+      <h3>Employee Successfully added</h3>
+      <div style="display: flex; justify-content: center; margin-bottom: 5px;">
+        <button style="background-color: yellowgreen; border: 1px yellowgreen solid; padding-left: 30px; padding-right: 30px; padding-top: 5px; padding-bottom: 5px; color: white;" (click)="hidePopup()">OK</button>
+      </div>
+    </div>
   </div>
 
   <h2 style="display: flex; justify-content: center;">Daily Attendance Form</h2>
@@ -101,32 +102,47 @@
   </div>
 
   <!-- Entered employee attendance data -->
-  <div style="display: flex; justify-content: center; margin-top: 10px;">
-    <h3>ManagerId: {{checkManagerId}}</h3>
-    <table id="employeeRecordsTable" hidden>
-      <thead>
-        <th>Employee ID</th>
-        <th>Name</th>
-        <th>Date</th>
-        <th>Attendance Code</th>
-        <th>Leave Type</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let employee of listOfEmployeesAttendance">
-          <td>{{employee.empId}}</td>
-          <td>{{employee.name}}</td>
-          <td>{{employee.date}}</td>
-          <td>{{employee.attendanceCode}}</td>
-          <td>{{employee.leaveType}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <div id="employeeDataTable" hidden>
+    <div style="display: flex; justify-content: center;">
+      <h3 id="currentManager" style="display: block;">ManagerId: {{checkManagerId}}</h3>
+    </div>
 
-  <!-- Sends mail containing employee attendance data to chosen manager -->
-  <div style="display: flex; justify-content: center; margin-top: 5px;">
-    <button id="sendEmail" type="submit" (click)="sendEmail()" hidden>Send Email</button>
-    <div id="emailError" style="color: red;">Error sending email. Try again later</div>
-    <div id="emailSucceeded">Successfully sent email with report</div>
+    <div style="display: flex; justify-content: center;">
+      <button (click)="startOver()">Start Over</button>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
+      <table id="employeeRecordsTable" style="display: block;">
+        <thead>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Attendance Code</th>
+          <th>Leave Type</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of listOfEmployeesAttendance">
+            <td>{{employee.empId}}</td>
+            <td>{{employee.name}}</td>
+            <td>{{employee.date}}</td>
+            <td>{{employee.attendanceCode}}</td>
+            <td>{{employee.leaveType}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sends mail containing employee attendance data to chosen manager -->
+    <div style="display: flex; justify-content: center; margin-top: 15px;">
+      <button id="sendEmail" type="submit" (click)="sendEmail()">Send Email</button>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+      <p id="emailError" style="color: red;" hidden>Error sending email. Try again later</p>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+      <p id="emailSucceeded" hidden>Successfully sent email with report</p>
+    </div>
   </div>
 </div>

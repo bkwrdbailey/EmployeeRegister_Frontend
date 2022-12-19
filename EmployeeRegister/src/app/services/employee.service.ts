@@ -19,7 +19,7 @@ export class EmployeeService {
 
   // Sends HTTP request with data meant to be emailed to a specified manager
   emailEmployeeReport(employeeReport: EmployeeTabularData[]): Observable<boolean> {
-    return this.http.post<boolean>(environment.apiBaseUrl + 'email/manager', employeeReport);
+    return this.http.put<boolean>(environment.apiBaseUrl + 'email/manager', employeeReport);
   }
 
   // Sends HTTP GET request to be able to verify if inputted manager ID matches an ID in the database
@@ -33,7 +33,8 @@ export class EmployeeService {
   }
 
   // Sends HTTP GET request to check if the employee id exists and acquire that employee's name
-  checkEmployeeId(employeeId: number): Observable<string> {
-    return this.http.get<string>(environment.apiBaseUrl + `check/${employeeId}`);
+  checkEmployeeId(employeeId: number): Observable<Employee> {
+    var name = this.http.get<Employee>(environment.apiBaseUrl + `check/${employeeId}`);
+    return name;
   }
 }
