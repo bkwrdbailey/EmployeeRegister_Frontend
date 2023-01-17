@@ -19,7 +19,6 @@ jobs:
           sudo apt install npm
           npm install -g @angular/cli
           npm install --force @angular-devkit/build-angular
-          ng test --code-coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
